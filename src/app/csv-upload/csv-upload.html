@@ -15,115 +15,73 @@
       <section>
         <div class="example-button-row">
           <button matButton="elevated" (click)="fileInput.click()">Seleccionar Archivo</button>
-          <button type="button" matButton="filled" (click)="onUpload()" [disabled]="!file">Leer Archivo</button>
-
+          <button type="button" matButton="filled" (click)="onUpload()" [disabled]="!file">
+            Leer Archivo
+          </button>
         </div>
       </section>
-
     </div>
 
     <br />
 
-     <!-- CONTENEDOR SCROLL -->
+    <!-- CONTENEDOR SCROLL -->
     <div class="table-container">
-
-      <table
-        mat-table
-        [dataSource]="data"
-        class="mat-elevation-z8"
-        *ngIf="data.length > 0"
-      >
-
+      <table mat-table [dataSource]="data" class="mat-elevation-z8" *ngIf="data.length > 0">
         <!-- Folio -->
         <ng-container matColumnDef="Folio">
-
-          <th mat-header-cell *matHeaderCellDef>
-            Folio
-          </th>
+          <th mat-header-cell *matHeaderCellDef>Folio</th>
 
           <td mat-cell *matCellDef="let element">
             {{ element.Folio }}
           </td>
-
         </ng-container>
-
 
         <!-- Fecha -->
         <ng-container matColumnDef="Fecha">
-
-          <th mat-header-cell *matHeaderCellDef>
-            Fecha
-          </th>
+          <th mat-header-cell *matHeaderCellDef>Fecha</th>
 
           <td mat-cell *matCellDef="let element">
             {{ element.Fecha }}
           </td>
-
         </ng-container>
-
 
         <!-- Categoria -->
         <ng-container matColumnDef="Categoria">
-
-          <th mat-header-cell *matHeaderCellDef>
-            Categoría
-          </th>
+          <th mat-header-cell *matHeaderCellDef>Categoría</th>
 
           <td mat-cell *matCellDef="let element">
             {{ element.Categoria }}
           </td>
-
         </ng-container>
-
 
         <!-- Monto -->
         <ng-container matColumnDef="Monto">
-
-          <th mat-header-cell *matHeaderCellDef>
-            Monto
-          </th>
+          <th mat-header-cell *matHeaderCellDef>Monto</th>
 
           <td mat-cell *matCellDef="let element">
             {{ element.Monto }}
           </td>
-
         </ng-container>
-
 
         <!-- Estatus -->
         <ng-container matColumnDef="Estatus">
-
-          <th mat-header-cell *matHeaderCellDef>
-            Estatus
-          </th>
+          <th mat-header-cell *matHeaderCellDef>Estatus</th>
 
           <td mat-cell *matCellDef="let element">
             {{ element.Estatus }}
           </td>
-
         </ng-container>
 
-
         <!-- HEADER -->
-        <tr
-          mat-header-row
-          *matHeaderRowDef="displayedColumns; sticky: true"
-        ></tr>
-
+        <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
 
         <!-- FILAS -->
-        <tr
-          mat-row
-          *matRowDef="let row; columns: displayedColumns;"
-        ></tr>
-
+        <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
       </table>
-     </div>
+    </div>
 
     <br />
 
-     <!-- Agregar validaciones en front -->
-
+    <!-- Agregar validaciones en front -->
   </div>
-
 </main>
