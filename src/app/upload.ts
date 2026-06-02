@@ -1,39 +1,72 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import {MatIconModule} from '@angular/material/icon';
-import {MatDividerModule} from '@angular/material/divider';
-import {MatButtonModule} from '@angular/material/button';
+
+import { MatIconModule } from '@angular/material/icon';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatButtonModule } from '@angular/material/button';
+import { MatTableModule } from '@angular/material/table';
+
 import * as Papa from 'papaparse';
+
+
+// Interface para estructura de datos CSV
+interface DataTableValues {
+  Folio: string;
+  Fecha: string;
+  Categoria: string;
+  Monto: string;
+  Estatus: string;
+}
 
 
 @Component({
   selector: 'app-root',
+
   standalone: true,
+
   imports: [
     CommonModule,
     MatButtonModule,
     MatDividerModule,
-    MatIconModule
+    MatIconModule,
+    MatTableModule
   ],
+
   templateUrl: './upload.html',
   styleUrl: './upload.scss'
 })
+
 export class App {
 
-  //inicializar variable para almacenar archivo
+  // archivo seleccionado
   file: File | null = null;
-  data: any[] = [];
 
-  //Fn: guardar archivo seleccionado en variable : file
+  // datos CSV
+  data: DataTableValues[] = [];
+
+  // columnas tabla material
+  displayedColumns: string[] = [
+    'Folio',
+    'Fecha',
+    'Categoria',
+    'Monto',
+    'Estatus'
+  ];
+
+
+  // guardar archivo seleccionado
   onFileSelected(event: any) {
+
     this.file = event.target.files[0];
+
     if (!this.file) {
-      console.log('No file selected');  // pendiente validación
+      console.log('No file selected');
     }
   }
 
-  onUpload() {
 
+  // leer CSV
+  onUpload() {
     if (!this.file) {
       console.log('No file selected');
       return;
@@ -46,15 +79,13 @@ export class App {
 
       complete: (result) => {
 
-        this.data = result.data as any[];
+        this.data = [...result.data as DataTableValues[]];
 
-        console.log('CSV DATOS:', this.data); // info de tabla
-      },
+        console.log('CSV DATOS:', this.data);
 
-      // pendientes validaciones
+      }
 
     });
   }
-
 
 }

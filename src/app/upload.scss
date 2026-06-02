@@ -11,26 +11,15 @@
     position: relative;
   }
 
-  .content {
-    display: flex;
-    justify-content: space-around;
-    width: 100%;
-    max-width: 700px;
-    margin-bottom: 3rem;
-  }
-
-  .content h1 {
-    margin-top: 1.75rem;
-  }
 
   .content p {
     margin-top: 1.5rem;
   }
 
   h3 {
+    justify-self: center;
     font-size: 3.125rem;
     color: var(--gray-900);
-    font-weight: 500;
     line-height: 100%;
     letter-spacing: -0.125rem;
     margin: 0;
@@ -39,17 +28,38 @@
       "Segoe UI Symbol";
   }
 
-.upload-box {
-  border: 2px dashed #ccc;
-  padding: 20px;
-  border-radius: 12px;
+  .upload-box {
+    border: 2px dashed #ccc;
+    padding: 20px;
+    padding-inline: 10px;
+    border-radius: 12px;
 
-  min-height: 100px;
+    min-height: 100px;
 
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+.table-container {
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+table {
+  width: 100%;
+  border: 1px solid black;
+  overflow: hidden 0.5px;
+}
+
+th {
+  font-weight: 600;
+}
+
+td, th {
+  padding: 14px;
 }
 
   @media screen and (max-width: 650px) {
