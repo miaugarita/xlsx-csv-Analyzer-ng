@@ -3,5 +3,5 @@ export interface DataTableValues {
   Fecha: string;
   Categoria: string;
   Monto: number;
-  Estatus: boolean;
+  Estatus: number;
 }

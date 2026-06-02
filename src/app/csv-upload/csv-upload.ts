@@ -3,50 +3,76 @@ import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { MatTableModule } from '@angular/material/table';
 
-import { CsvApiService } from '../services/api-csv';
-import { validateCsvData } from '../services/csv-validator-service';
+import * as Papa from 'papaparse';
+
 import { DataTableValues } from '../models/csv-model';
+import { validateCsvData } from '../csv-validators/csv-validator';
 
 @Component({
-  selector: 'app-csv-upload',
+  selector: 'csv-upload',
   standalone: true,
   imports: [CommonModule, MatButtonModule, MatTableModule],
   templateUrl: './csv-upload.html',
-  styleUrl: './upload.scss',
+  styleUrl: './csv-upload.scss',
 })
 export class CsvUploadComponent {
 
+  //archivo seleccionado
   file: File | null = null;
+
+  //datos válidos
   data: DataTableValues[] = [];
 
-  displayedColumns = ['Folio', 'Fecha', 'Categoria', 'Monto', 'Estatus'];
+  errors: string[] = [];
 
-  constructor(private csvService: CsvApiService) {}
+  displayedColumns: string[] = [
+    'Folio',
+    'Fecha',
+    'Categoria',
+    'Monto',
+    'Estatus'
+  ];
 
+  //seleccionar archivo
   onFileSelected(event: any) {
     this.file = event.target.files[0];
   }
 
-  async onUpload() {
-    if (!this.file) return;
-
-    // 1. parseo (service)
-    const parsedData = await this.csvService.parseCsv(this.file);
-
-    // 2. validación
-    const validation = validateCsvData(parsedData, {
-      requiredFields: ['Folio', 'Fecha', 'Categoria', 'Monto', 'Estatus'],
-      uniqueField: 'Folio',
-      numericFields: ['Monto'],
-    });
-
-    if (!validation.isValid) {
-      console.log('ERRORES CSV:', validation.errors);
+  //procesar CSV
+  onUpload() {
+    if (!this.file) {
+      console.log('No file selected');
       return;
     }
 
-    // 3. resultado
-    this.data = validation.data;
-    console.log('CSV VALIDADO ✔️', this.data);
+    Papa.parse(this.file, {
+      header: true,
+      skipEmptyLines: true,
+
+      complete: (result) => {
+        const parsedData = result.data as DataTableValues[];
+
+        // 🧪 validación
+        const validation = validateCsvData(parsedData, {
+          requiredFields: ['Folio', 'Fecha', 'Categoria', 'Monto', 'Estatus'],
+          uniqueField: 'Folio',
+          numericFields: ['Monto'],
+        });
+
+        //guardar errores para UI
+        this.errors = validation.errors;
+
+        //si hay errores, detener flujo
+        if (!validation.isValid) {
+          this.data = [];
+          return;
+        }
+
+        //datos válidos
+        this.data = validation.data;
+
+        console.log('CSV VALIDADO ✔️', this.data);
+      },
+    });
   }
 }

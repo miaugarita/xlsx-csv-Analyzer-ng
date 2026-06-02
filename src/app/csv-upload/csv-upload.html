@@ -24,6 +24,14 @@
 
     <br />
 
+    <div class="errors-container" *ngIf="errors.length > 0">
+      <ul>
+        <li *ngFor="let error of errors">
+          {{ error }}
+        </li>
+      </ul>
+    </div>
+
     <!-- CONTENEDOR SCROLL -->
     <div class="table-container">
       <table mat-table [dataSource]="data" class="mat-elevation-z8" *ngIf="data.length > 0">
@@ -85,3 +93,5 @@
     <!-- Agregar validaciones en front -->
   </div>
 </main>
+
+

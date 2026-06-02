@@ -1,0 +1,57 @@
+.container {
+  padding: 40px;
+}
+
+main {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem;
+  box-sizing: inherit;
+  position: relative;
+}
+
+
+.error-box {
+  margin-top: 15px;
+  padding: 12px;
+  border: 1px solid #ff4d4d;
+  background: #ffe5e5;
+  color: #b30000;
+  border-radius: 8px;
+}
+
+
+//MENSAJES DE ERROR
+.errors-container {
+  background: #ffe5e5;
+  border: 1px solid #ff4d4d;
+  padding: 10px;
+  margin-top: 15px;
+  border-radius: 6px;
+}
+
+.errors-container h3 {
+  margin: 0 0 10px 0;
+  color: #c62828;
+}
+
+.errors-container li {
+  color: #b71c1c;
+}
+
+.success-container {
+  background: #e6ffed;
+  border: 1px solid #2ecc71;
+  padding: 10px;
+  margin-top: 15px;
+  border-radius: 6px;
+  color: #1e7e34;
+}
+
+@media screen and (max-width: 650px) {
+  .content {
+    flex-direction: column;
+    width: max-content;
+  }
+}
