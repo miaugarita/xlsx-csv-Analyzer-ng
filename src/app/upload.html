@@ -1,26 +1,27 @@
 <main class="main">
-
   <div class="container">
-
     <h3>CSV Analyzer</h3>
 
-    <br>
+    <br />
 
     <div class="upload-box">
+     <!--  <input type="file" accept=".csv" /> -->
+       <section>
+         <input type="file" accept=".csv" hidden #fileInput (change)="onFileSelected($event)" />
+        <p *ngIf="file">
+          Archivo seleccionado:
+          <i> {{ file.name }}</i>
+        </p>
+       </section>
+      <section>
+        <div class="example-button-row">
+          <button matButton="elevated" (click)="fileInput.click()">Seleccionar Archivo</button>
 
-      <input
-        type="file"
-        accept=".csv"
-      >
-
-      <button >
-        Leer archivo
-      </button>
-
+          <button matButton="filled">Leer Archivo</button>
+        </div>
+      </section>
     </div>
 
-    <br>
-
+    <br />
   </div>
-
 </main>
