@@ -1,0 +1,27 @@
+<div *ngIf="summary">
+
+  <h3>Resumen</h3>
+
+  <p>
+    <strong>Total de registros:</strong>
+    {{ summary.totalRecords }}
+  </p>
+
+  <p>
+    <strong>Suma total de montos:</strong>
+    {{ summary.totalAmount }}
+  </p>
+
+  <h4>Por estatus</h4>
+
+  <div *ngFor="let item of summary.byStatus | keyvalue">
+    {{ item.key }}: {{ item.value }}
+  </div>
+
+  <h4>Por categoría</h4>
+
+  <div *ngFor="let item of summary.byCategory | keyvalue">
+    {{ item.key }}: {{ item.value }}
+  </div>
+
+</div>

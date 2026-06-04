@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import * as Papa from 'papaparse';
 
-import { DataTableValues , CsvValidationConfig , CsvValidationResult , } from '../model';
+import { DataTableValues , CsvValidationConfig , CsvValidationResult , } from '../models/model';
 
 
 

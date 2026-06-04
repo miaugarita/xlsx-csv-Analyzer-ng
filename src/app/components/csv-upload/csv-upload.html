@@ -1,102 +1,97 @@
 <main class="main">
   <div class="container">
+    <h3>CSV Analizador</h3>
 
-    <div class="area-izquierda">
-      <h3>CSV Analizador</h3>
+    <br />
 
-      <br />
-
-      <div class="upload-box">
-        <section>
-          <input type="file" accept=".csv" hidden #fileInput (change)="onFileSelected($event)" />
-          <p *ngIf="file">
-            Archivo seleccionado:
-            <i> {{ file.name }}</i>
-          </p>
-        </section>
-        <section>
-          <div class="example-button-row">
-            <button matButton="elevated" (click)="fileInput.click()">Seleccionar Archivo</button>
-            <button type="button" matButton="filled" (click)="onUpload()" [disabled]="!file">
-              Leer Archivo
-            </button>
-          </div>
-        </section>
-      </div>
-
-      <div class="errors-container" *ngIf="errors.length > 0">
-        <ul>
-          <li *ngFor="let error of errors">
-            {{ error }}
-          </li>
-        </ul>
-      </div>
-
-      <!-- CONTENEDOR SCROLL -->
-      <div class="table-container">
-        <table mat-table [dataSource]="data" class="mat-elevation-z8" *ngIf="data.length > 0">
-          <!-- Folio -->
-          <ng-container matColumnDef="Folio">
-            <th mat-header-cell *matHeaderCellDef>Folio</th>
-
-            <td mat-cell *matCellDef="let element">
-              {{ element.Folio }}
-            </td>
-          </ng-container>
-
-          <!-- Fecha -->
-          <ng-container matColumnDef="Fecha">
-            <th mat-header-cell *matHeaderCellDef>Fecha</th>
-
-            <td mat-cell *matCellDef="let element">
-              {{ element.Fecha }}
-            </td>
-          </ng-container>
-
-          <!-- Categoria -->
-          <ng-container matColumnDef="Categoria">
-            <th mat-header-cell *matHeaderCellDef>Categoría</th>
-
-            <td mat-cell *matCellDef="let element">
-              {{ element.Categoria }}
-            </td>
-          </ng-container>
-
-          <!-- Monto -->
-          <ng-container matColumnDef="Monto">
-            <th mat-header-cell *matHeaderCellDef>Monto</th>
-
-            <td mat-cell *matCellDef="let element">
-              {{ element.Monto }}
-            </td>
-          </ng-container>
-
-          <!-- Estatus -->
-          <ng-container matColumnDef="Estatus">
-            <th mat-header-cell *matHeaderCellDef>Estatus</th>
-
-            <td mat-cell *matCellDef="let element">
-              {{ element.Estatus === 1 ? 'Activo' : 'Inactivo' }}
-            </td>
-          </ng-container>
-
-          <!-- HEADER -->
-          <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
-
-          <!-- FILAS -->
-          <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
-        </table>
-      </div>
+    <div class="upload-box">
+      <section>
+        <input type="file" accept=".csv" hidden #fileInput (change)="onFileSelected($event)" />
+        <p *ngIf="file">
+          Archivo seleccionado:
+          <i> {{ file.name }}</i>
+        </p>
+      </section>
+      <section>
+        <div class="example-button-row">
+          <button matButton="elevated" (click)="fileInput.click()">Seleccionar Archivo</button>
+          <button type="button" matButton="filled" (click)="onUpload()" [disabled]="!file">
+            Leer Archivo
+          </button>
+        </div>
+      </section>
     </div>
 
-    <div class="area-derecha">
-    <!-- Aquí va el contenido principal -->
+    <!--VALIDACIONES - convertir a componente-->
+    <div class="errors-container" *ngIf="errors.length > 0">
+      <ul>
+        <li *ngFor="let error of errors">
+          {{ error }}
+        </li>
+      </ul>
+    </div>
+
+    <!-- CONTENEDOR SCROLL -->
+    <div class="table-container">
+      <table mat-table [dataSource]="data" class="mat-elevation-z8" *ngIf="data.length > 0">
+        <!-- Folio -->
+        <ng-container matColumnDef="Folio">
+          <th mat-header-cell *matHeaderCellDef>Folio</th>
+
+          <td mat-cell *matCellDef="let element">
+            {{ element.Folio }}
+          </td>
+        </ng-container>
+
+        <!-- Fecha -->
+        <ng-container matColumnDef="Fecha">
+          <th mat-header-cell *matHeaderCellDef>Fecha</th>
+
+          <td mat-cell *matCellDef="let element">
+            {{ element.Fecha }}
+          </td>
+        </ng-container>
+
+        <!-- Categoria -->
+        <ng-container matColumnDef="Categoria">
+          <th mat-header-cell *matHeaderCellDef>Categoría</th>
+
+          <td mat-cell *matCellDef="let element">
+            {{ element.Categoria }}
+          </td>
+        </ng-container>
+
+        <!-- Monto -->
+        <ng-container matColumnDef="Monto">
+          <th mat-header-cell *matHeaderCellDef>Monto</th>
+
+          <td mat-cell *matCellDef="let element">
+            {{ element.Monto }}
+          </td>
+        </ng-container>
+
+        <!-- Estatus -->
+        <ng-container matColumnDef="Estatus">
+          <th mat-header-cell *matHeaderCellDef>Estatus</th>
+
+          <td mat-cell *matCellDef="let element">
+            {{ element.Estatus === 1 ? 'Activo' : 'Inactivo' }}
+          </td>
+        </ng-container>
+
+        <!-- HEADER -->
+        <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+
+        <!-- FILAS -->
+        <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+      </table>
     </div>
 
     <br />
 
-    <!-- Agregar validaciones en front -->
+    <!--RESUMEN - componente html-->
+    <csv-summary *ngIf="summary.totalRecords > 0" [summary]="summary"> </csv-summary>
+
+
   </div>
 </main>
-
-
