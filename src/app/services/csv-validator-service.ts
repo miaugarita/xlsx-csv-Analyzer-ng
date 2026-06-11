@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import * as Papa from 'papaparse';
 import * as XLSX from 'xlsx';
 
-import { DataTableValues, CsvValidationConfig, CsvValidationResult } from '../models/model';
+import { DataTableValues, CsvValidationConfig, CsvValidationResult } from '../models/data-file-models';
 
 export enum EstatusEnum {
   Inactivo = 0,

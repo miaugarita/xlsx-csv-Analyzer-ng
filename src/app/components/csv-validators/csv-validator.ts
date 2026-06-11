@@ -9,7 +9,6 @@ import { CommonModule } from '@angular/common';
   styleUrl: 'csv-validator.scss'
 })
 export class CsvValidatorComponent {
-
   @Input()
   errors: string[] = [];
 }

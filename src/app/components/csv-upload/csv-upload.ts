@@ -5,8 +5,9 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatTableModule } from '@angular/material/table';
 
 import { CsValidatorService } from '../../services/csv-validator-service';
+import { CsvSummaryService } from '../../services/csv-summary-service';
 import { CsvSummaryComponent } from '../csv-summary/csv-summary';
-import { DataTableValues } from '../../models/model';
+import { DataTableValues, CsvSummary } from '../../models/data-file-models';
 
 @Component({
   selector: 'csv-upload',
@@ -30,16 +31,17 @@ export class CsvUploadComponent {
     'Estatus',
   ];
 
-  summary = {
+  summary: CsvSummary = {
     totalRecords: 0,
-    totalAmount : 0,
-    byStatus: {} as Record<string, number>,
-    byCategory: {} as Record<string, number>,
+    totalAmount: 0,
+    byStatus: {},
+    byCategory: {},
   };
 
   //INYECTAR SERVICIO
   constructor(
     private CsValidatorService: CsValidatorService,
+    private CsvSummaryService: CsvSummaryService,
     private cdr: ChangeDetectorRef,
   ) {}
 
@@ -50,19 +52,14 @@ export class CsvUploadComponent {
 
   // procesar CSV
   async onUpload() {
-    console.log('CLICK');
 
     if (!this.file) {
       console.log('No file selected');
       return;
     }
 
-    console.log('Procesando:', this.file.name);
-
     //parsear archivo
     const parsedData = await this.CsValidatorService.parseFile(this.file);
-
-    console.log('Datos parseados:', parsedData);
 
     //validar archivo
     const validation = this.CsValidatorService.validateCsvData(parsedData, {
@@ -75,6 +72,21 @@ export class CsvUploadComponent {
 
     // detener flujo si hay errores
     if (!validation.isValid) {
+      this.resetData();
+      this.cdr.detectChanges();
+      return;
+    }
+
+    this.data = [...validation.data];
+
+    this.summary = this.CsvSummaryService.generateSummary(this.data);
+
+    //refrescar
+    this.cdr.detectChanges();
+  }
+
+  //limpiar datos
+  private resetData(): void {
       this.data = [];
       this.summary = {
         totalRecords: 0,
@@ -82,42 +94,5 @@ export class CsvUploadComponent {
         byStatus: {},
         byCategory: {}
       };
-      this.cdr.detectChanges();
-      return;
     }
-
-    this.data = [...validation.data];
-
-    this.generateSummary(); //llamar fn resumen
-
-    //refrescar
-    this.cdr.detectChanges();
-  }
-
-  //llamar a funcion de summary en archivo de cvs-summary
-  private generateSummary(): void {
-
-    this.summary = {
-      totalRecords: this.data.length,
-      totalAmount: 0,
-      byStatus: {},
-      byCategory: {},
-    };
-
-    this.data.forEach((item) => {
-      // Suma de montos
-      this.summary.totalAmount += Number(item.Monto);
-
-      // Agrupar por estatus
-      const estatus = Number(item.Estatus) === 1 ? 'Activo' : 'Inactivo';
-
-      this.summary.byStatus[estatus] = (this.summary.byStatus[estatus] || 0) + 1;
-
-      // Agrupar por categoría
-      this.summary.byCategory[item.Categoria] =
-        (this.summary.byCategory[item.Categoria] || 0) + 1;
-    });
-
-
-  }
 }
